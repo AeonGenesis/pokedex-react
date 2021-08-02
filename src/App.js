@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Route, Switch } from "react-router";
+
+import Pokedex from "./components/Pokedex/Pokedex";
+import PokemonDetail from "./components/PokemonDetail/PokemonDetail";
+
+const pokemonUrl =
+  "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json";
 
 function App() {
+  const [pokemon, setPokemon] = useState([]);
+
+  useEffect(() => {
+    const getPokemonData = async () => {
+      const resp = await axios.get(pokemonUrl);
+      setPokemon(resp.data.pokemon);
+    };
+
+    getPokemonData();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Switch>
+      <Route exact path="/">
+        <Pokedex pokemon={pokemon} />
+      </Route>
+      <Route exact path="/:pokemonid">
+        <PokemonDetail pokemon={pokemon} />
+      </Route>
+    </Switch>
   );
 }
 
