@@ -15,3 +15,4 @@ This project was created to practice skills in react and react-router.
 - Chakra-UI
 
 ## View the Project
+https://aeongenesis.github.io/pokedex-react/#/
